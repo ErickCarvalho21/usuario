@@ -93,7 +93,7 @@ public class UsuarioService {
         Endereco entity = enderecoRepository.findById(idEndereco).orElseThrow(() ->
                 new ResourceNotFoundException("ID nao encontrado" + idEndereco));
 
-        Endereco endereco = usuarioConverter.upadateEndereco(enderecoDTO,entity);
+        Endereco endereco = usuarioConverter.updateEndereco(enderecoDTO,entity);
 
         enderecoRepository.save(endereco);
 
@@ -103,7 +103,7 @@ public class UsuarioService {
     public TelefoneDTO atualizaTelefone(Long idTelefone, TelefoneDTO dto){
         Telefone entity = telefoneRepository.findById(idTelefone).orElseThrow(() ->
                 new ResourceNotFoundException("Id nao encontrado" + idTelefone));
-        Telefone telefone = usuarioConverter.upadateTelefone(dto,entity);
+        Telefone telefone = usuarioConverter.updateTelefone(dto,entity);
 
         return usuarioConverter.paraTelefoneDTO(telefoneRepository.save(telefone));
 
@@ -127,6 +127,7 @@ public class UsuarioService {
         Telefone telefoneEtity = telefoneRepository.save(telefone);
         return usuarioConverter.paraTelefoneDTO(telefoneEtity);
     }
+
 
 
 
