@@ -23,16 +23,14 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final UsuarioConverter usuarioConverter;
-    private final PasswordEncoder passwordEncoderr;
+    private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final EnderecoRepository enderecoRepository;
     private final TelefoneRepository telefoneRepository;
 
     public UsuarioDTO salvaUsuario(UsuarioDTO usuarioDTO){
         emailExiste(usuarioDTO.getEmail());
-        usuarioDTO.setSenha(passwordEncoderr
-
-                .encode(usuarioDTO.getSenha()));
+        usuarioDTO.setSenha(passwordEncoder.encode(usuarioDTO.getSenha()));
 
         Usuario usuario = usuarioConverter.paraUsuario(usuarioDTO);
          return usuarioConverter.paraUsuarioDTO(
@@ -53,17 +51,12 @@ public class UsuarioService {
     }
 
     public UsuarioDTO buscarUsuarioPorEmail(String email) {
-        try {
-            return usuarioConverter.paraUsuarioDTO(
-                    usuarioRepository.findByEmail(email)
-                            .orElseThrow(() -> new ResourceNotFoundException
-                    ("Email nao encontrado" + email)
-                            )
-            );
-        } catch (ResourceNotFoundException e) {
-            throw new ResourceNotFoundException("Email naoo encontrado" + email);
-        }
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Email nao encontrado: " + email));
+        return usuarioConverter.paraUsuarioDTO(usuario);
     }
+
     public void deletaUsuarioPorEmail(String email){
         usuarioRepository.deleteByEmail(email);
 
@@ -74,7 +67,7 @@ public class UsuarioService {
         String email = jwtUtil.extrairEmailToken(token.substring(7));
 
         //Criptografias de senha
-        dto.setSenha(dto.getSenha() != null ? passwordEncoderr.encode(dto.getSenha()) : null);
+        dto.setSenha(dto.getSenha() != null ? passwordEncoder.encode(dto.getSenha()) : null);
 
 
         //Busca os dados do usuario no banco de dados
