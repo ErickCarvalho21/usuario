@@ -1,6 +1,5 @@
 package com.javanauta.usuario.business.controller;
 
-
 import com.javanauta.usuario.infrastructure.exceptions.ConflictException;
 import com.javanauta.usuario.infrastructure.exceptions.ILLegalArgumentsException;
 import com.javanauta.usuario.infrastructure.exceptions.ResourceNotFoundException;
@@ -28,9 +27,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
+
+
     @ExceptionHandler(ILLegalArgumentsException.class)
     public ResponseEntity<String> handlerILLegalArgumentException(ILLegalArgumentsException ex){
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
 
 }
