@@ -27,7 +27,7 @@ public class SecurityConfig {
 
     // Instâncias de JwtUtil e UserDetailsService injetadas pelo Spring
     private final JwtUtil jwtUtil;
-    private final UserDetailsService userDetailsService;
+    private final UserDetailsService  userDetailsService;
 
     // Construtor para injeção de dependências de JwtUtil e UserDetailsService
     @Autowired
