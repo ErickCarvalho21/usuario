@@ -1,5 +1,6 @@
 package com.javanauta.usuario.infrastructure.exceptions;
 
+
 import javax.naming.AuthenticationException;
 
 public class UnauthorizedException extends AuthenticationException {
